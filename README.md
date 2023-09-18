@@ -1,5 +1,5 @@
 # OPENLANE 
-- [Inception of open source EDA  OpenLANE and Sky130 PDK](#Inception-of-open-source-EDA-OpenLANE-and-Sky130-PDK)
+- [Inception of open source EDA OpenLANE and Sky130 PDK](#Inception-of-open-source-EDA-OpenLANE-and-Sky130-PDK)
 - [Good floorplan vs bad floorplan and introduction to library cells](#Good-floorplan-vs-bad-floorplan-and-introduction-to-library-cells)
 - [Design library cell using Magic Layout and ngspice characterization](#Design-library-cell-using-Magic-Layout-and-ngspice-characterization)
 - [Pre-layout timing analysis and importance of good clock tree](#Pre-layout-timing-analysis-and-importance-of-good-clock-tree)
