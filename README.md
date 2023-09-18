@@ -278,6 +278,14 @@ These timing characteristics are vital for understanding and characterizing the 
 **OpenLANE** allows users to make changes to environment variables on the fly. For instance, if we wish to change the pin placement from equidistant to some other style of placement we may do the following in the openLANE flow:
 
 `set ::env(FP_IO_MODE) 2`
+
+</details>
+
+<details>
+<summary>Inception of Layout A` CMOS Fabrication process</summary>
+
+### Inception of Layout A` CMOS Fabrication process
+
 SPICE Deck creation & Simulation
 A SPICE deck includes information about the following:
 
@@ -311,41 +319,87 @@ The Magic layout of a CMOS inverter will be used so as to intergate the inverter
 
 `git clone https://github.com/nickson-jose/vsdstdcelldesign`
 
+![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/f3725674-0176-4019-b5bd-f9c70eab2f56)
+
 `cp sky130A.tech /home/vsduser/Desktop/work/tools/openlane_working_dir/openlane/vsdstdcelldesign`
 
 ` magic -T sky130A.tech sky130_inv.mag &`
-</details>
 
-<details>
-<summary>Inception of Layout A` CMOS Fabrication process</summary>
+![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/311f0afd-d35d-4eab-bb49-4c59a65b78eb)
 
-### Inception of Layout A` CMOS Fabrication process
++ Press s 3 times on the layout and type `what` to view the selected layers as shown below
 
-+ Create Active regions
-+ Formation of N-well and P-well
-+ Formation of gate terminal
-+ Lightly doped drain (LDD) formation
-+ Source Â drain formation
-+ Local interconnect formation
-+ Higher level metal formation
-+ Lab introduction to Sky130 basic layers layout and LEF using inverter
-+ Lab steps to create std cell layout and extract spice netlist
+  ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/84ba35ce-eccc-4d9c-9d82-592411e494a0)
+
++ ```
+     extract all
+     ext2spice cthresh 0 rethresh 0
+     ext2spice
+  ```   
+![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/de22d1e3-e94b-4e6e-a45e-25ee42efed05)
+
+This generates the sky130_in.spice file as shown above. This SPICE deck is edited to include pshort.lib and nshort.lib which are the PMOS and NMOS libraries respectively. In addition, the minimum grid size of inverter is measured from the magic layout and incorporated into the deck as: .option scale=0.01u. The model names in the MOSFET definitions are changed to pshort.model.0 and nshort.model.0 respectively for PMOS and NMOS. 
+
+![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/77547452-a0f4-42d9-b953-73bc76abaaa8)
+
+
 </details>
 
 <details>
 <summary>Sky 130 Tech File Labs</summary>
 
+***Steps to Create Standard Cell Layout and Extract Spice Netlist***
 ### Sky 130 Tech File Labs
 
-+ Lab steps to create final SPICE deck using Sky130 tech
-+ Lab steps to characterize inverter using sky130 model files
-+ Lab introduction to Magic tool options and DRC rules
-+ Lab introduction to Sky130 pdk's and steps to download labs
-+ Lab introduction to Magic and steps to load Sky130 tech-rules
-+ Lab exercise to fix poly.9 error in Sky130 tech-file
-+ Lab exercise to implement poly resistor spacing to diff and tap
-+ Lab challenge exercise to describe DRC error as geometrical construct
-+ Lab challenge to find missing or incorrect rules and fix them
+![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/d6d7c64d-5d19-485e-86bd-acf4be6c9304)
+
++ type box  in tkcon window to check the minimum value of the layout window.
++ we need to open the spice file using the command
+  `gedit sky130_inv.spice`
++ We need to configure it to the below specifications.
+  VDD VPWR 0 3.3V
+  VSS VGND 0 0
+  Va A VGND PUSLE(0V 3.3V 0 0.1ns 0.1 ns 2ns 4ns)
+  .tran 1n 20n
+  .control
+  run 
+  .endc
+  .end
+ ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/fb7dc0c6-c4a4-4013-91a8-8ab14f50f79d)
+
+
++ `ngspice sky130_inv.spice`
+
+  ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/9cbbf017-a123-4134-88d6-202a5c0f7f4c)
+
++ `plot y vs time a`
+  ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/cff2096b-c46f-4825-8f45-efb5a94946ff)
++ ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/654ed9f5-4904-4161-b482-9c7d49c0660d)
++ ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/bbef72dc-b1a5-4910-bd69-0f38a34e6359)
++ ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/b023099b-59ca-440a-b352-8f0f059aba07)
+
+***Sky130 PDKS and Steps to Download Magic Too***
+` wget http://opencircuitdesign.com/open_pdks/archive/drc_tests.tgz`
+
+`mv drc_tests.tgz Desktop/`
+
+`tar xfz drc_tests.tgz `
+
+`magic -d XR`
+
++ We click 'file' and open the 'met3.mag' file.
++ If we select an area and type drc why in the tkcon wndow, it will show us the DRC error.
++ To add contact cuts to metal3, first select an area using left and right click. Then hovering over the m3contact we click middle mouse button.
++ ```
+  load tech sky130A.tech
+  drc check
+  ```
+
+
+
+
+
+
 </details>
 
 
