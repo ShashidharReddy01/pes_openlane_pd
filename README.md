@@ -378,8 +378,12 @@ This generates the sky130_in.spice file as shown above. This SPICE deck is edite
 + ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/bbef72dc-b1a5-4910-bd69-0f38a34e6359)
 + ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/b023099b-59ca-440a-b352-8f0f059aba07)
 
-***Sky130 PDKS and Steps to Download Magic Too***
+***Sky130 PDKS and Steps to Download Magic Tool***
+
 ` wget http://opencircuitdesign.com/open_pdks/archive/drc_tests.tgz`
+
+![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/ba583356-4d0c-483a-99c4-a548c16cb235)
+
 
 `mv drc_tests.tgz Desktop/`
 
@@ -388,18 +392,35 @@ This generates the sky130_in.spice file as shown above. This SPICE deck is edite
 `magic -d XR`
 
 + We click 'file' and open the 'met3.mag' file.
+  ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/5848d511-95c4-4fbc-8440-77a5f040660c)
+
 + If we select an area and type drc why in the tkcon wndow, it will show us the DRC error.
+  ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/1d4a3bbf-215e-4d1d-bcbc-bd96b94bd1a4)
+
 + To add contact cuts to metal3, first select an area using left and right click. Then hovering over the m3contact we click middle mouse button.
+  ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/2502ea93-3ef7-480c-bf4e-d4fe897fc343)
+
 + ```
   load tech sky130A.tech
   drc check
   ```
+  ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/3a112cd0-7320-4313-a1f5-78e477ca4d5a)
+  ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/bb6d58be-54fe-497c-bb8a-2d8266e7c459)
 
-
-
-
-
-
++ ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/e2e2ee4f-1261-42a0-b12e-8941a9f5fa8f)
++ ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/66ce6665-0be5-4ee7-8533-7edfa4c68466)
++ ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/e38dcfa3-59de-472b-91d5-8ccb37f7bfa5)
++ ```
+  tech load sky130A.tech
+  drc check
+  drc style drc(full)
+  drc check
+  ```
+  ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/038b521d-9af9-403b-88e0-98ee3f225af0)
+  ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/f2e69530-6bc2-478a-8e02-df25c8c6b919)
+  - Select the existing nwell.4 and make a copy of it by selecting it and clicking 'c'.
+  - Now select a small area on the nwell.4 and add an 'nsubstratecontact' by hovering over it and clicking middle mouse button.
+  
 </details>
 
 
@@ -410,14 +431,61 @@ This generates the sky130_in.spice file as shown above. This SPICE deck is edite
 
 ### Timing modelling using delay tables
 
+***Convert Grid Info to Track Info***
 
-+ Lab steps to convert grid info to track info
-+ Lab steps to convert magic layout to std cell LEF
-+ Introduction to timing libs and steps to include new cell in synthesis
-+ Introduction to delay tables
-+ Delay table usage Part 1
-+ Delay table usage Part 2
-+ Lab steps to configure synthesis settings to fix slack and include vsdinv
+![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/07e89800-3f41-4ddf-b455-c531f6c15f20)
+
+`less tracks.info`
+![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/f81fbe51-73c8-4f74-83ff-84d9ff5f642c)
+
++ The 'tracks.info' file is used during the routing stage.
++ Routes are the metal traces.
++ Since the PNR is an automated flow, we need to specify where all we want the routes to go.
++ ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/28110779-14da-42ae-98bf-e10351d3b257)
++ ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/5fe69c64-8720-41b1-8129-c5b63fdb34c3)
++ The next requirement is that the width of the cell should be the odd multiple of xpitch which is '0.46' as seen in the 'tracks.info' file.
++ As we can see it encloses two full boxes and two halves of one box, totally making three boxes as indicated by the white rectangle.
+
+***Convert Magic Layout to Standard Cell LEF***
+
++ `save sky130_vsdinv.mag`
++ `lef write`
++ `less sky130_vsdinv.lef`
++ ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/73ea100d-e028-48b1-b959-fe1e610f6410)
++ ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/92785598-ed73-404d-a66c-f493f516b5e5)
+
+***Steps to Include New Cell in Synthesis image***
+
+We copy the .mag file that we created to the 'src' folder of picorv32a folder.
++ ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/1708b041-6734-41c5-bf35-198ddb860739)
++ ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/63ee6bf7-e0ce-490b-9dca-b10175cb70ff)
++ `vim config.tcl`
+  ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/f4223662-619f-4e71-a108-57b76ce09738)
++ add these commands
+  ```
+  set ::env(LIB_SYNTH) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130/sky130_fd_sc_hd__typical.lib"
+  set ::env(LIB_SLOWEST) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130/sky130_fd_sc_hd__slow.lib"
+  set ::env(LIB_FASTEST) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130/sky130_fd_sc_hd__fast.lib"
+  set ::env(LIB_TYPICAL) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130/sky130_fd_sc_hd__typical.lib"
+
+  set ::env(EXTRA_LEFS) [glob $::env(OPENLANE_ROOT)/designs/$::env(DESIGN_NAME)/src/*.lef]
+  ```
++ ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/ed864ce0-9d39-46bb-9651-43f5aee11220)
++ Open the OpenLANE interactive window and retrieve the 0.9 package.
+  ```
+  prep -design picorv32a -tag 16-09_19-58 -overwrite
+  set lefs [glob $::env(DESIGN_DIR)/src/*.lef]
+  add_lefs -src $lefs
+  run_synthesis
+  ```
+  ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/5f581300-7a00-45f6-8977-1182557373c1)
+  ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/7523edbd-56be-41b4-82d5-c34dcb13a13c)
+
++ `init_floorplan
+   run_placement`
++ `magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.placement.def &`
++ ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/f103f653-d5a6-4f75-814a-030835c02cde)
+
 </details>
 
 <details>
@@ -425,11 +493,16 @@ This generates the sky130_in.spice file as shown above. This SPICE deck is edite
 
 ### Timming analysis with ideal clocks using openSTA
 
-+ Setup timing analysis and introduction to flip-flop setup time
-+ Introduction to clock jitter and uncertainty
-+ Lab steps to configure OpenSTA for post-synth timing analysis
-+ Lab steps to optimize synthesis to reduce setup violations
-+ Lab steps to do basic timing ECO
++ ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/d679ec5e-fcca-41c0-b64b-8bbb497cbf8c)
++ ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/10d0d230-a905-481b-8e25-cae8acd57a1f)
++ create two files in openalane
+  
+   - ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/2910fef6-106b-4adf-9fe8-db639a9cfadf)
+
+   - ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/7f90314f-c86b-47c6-9877-dab5ee613e11)
++ `sta pre_sta.conf`
++ ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/58a913bd-2767-4b88-ae19-cc4ee899caa1)
+  
 </details>
 
 <details>
@@ -437,10 +510,17 @@ This generates the sky130_in.spice file as shown above. This SPICE deck is edite
 
 ### Clock tree synthesis TrintonCTS and signal integrity
 
-+ Clock tree routing and buffering using H-Tree algorithm
-+ Crosstalk and clock net shielding
-+ Lab steps to run CTS using TritonCTS
-+ Lab steps to verify CTS runs
+![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/05f3ec72-6018-499a-990d-887571df46d0)
+
+![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/3b61293c-86bd-4f23-af55-097097818c16)
+
+![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/1b62459f-0e32-43e1-80c1-17f081060196)
+
+![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/e80a6b15-faee-4bab-94ef-05b7a75f6979)
+
++ `run_cts`
+ ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/3527d6bc-7941-4421-9dcb-e2a9f957910f)
+
 </details>
 
 <details>
@@ -448,11 +528,39 @@ This generates the sky130_in.spice file as shown above. This SPICE deck is edite
 
 ### Timing analysis with real clocks using open STA
 
-+ Setup timing analysis using real clocks
-+ Hold timing analysis using real clocks
-+ Lab steps to analyze timing with real clocks using OpenSTA
-+ Lab steps to execute OpenSTA with right timing libraries and CTS assignment
-+ Lab steps to observe impact of bigger CTS buffers on setup and hold timing
+![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/732b9197-34f6-4b4b-a690-024aacdb11bd)
+
+![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/62d346f0-9746-4bb7-81f0-8c2df3cabfd2)
+
+![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/f2cd6568-33f7-4211-b365-2a7d3497905a)
+
+![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/5f11307a-778e-4413-8a35-f5070fec38df)
+
+![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/db1c73d3-b955-4a7d-a79e-65d35f4eaae4)
+
+```
+openroad
+write_db pico_cts.db
+read_db pico_cts.db
+read_verilog /openLANE_flow/designs/picorv32a/runs/03-07_11-25/results/synthesis/picorv32a.synthesis_cts.v
+read_liberty $::env(LIB_SYNTH_COMPLETE)
+link_design picorv32a
+read_sdc /openLANE_flow/designs/picorv32a/src/my_base.sdc
+set_propagated_clock (all_clocks)
+report_checks -path_delay min_max -format full_clock_expanded -digits 4
+```
+![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/c56ce5a3-4eec-4e35-a964-f7644ce0a82e)
+
+![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/6289ae65-36e9-41f5-87f3-6d8c970884b2)
+
+![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/daca31c1-7909-4c73-8df9-689b76136750)
+
+``
+report_clock_skew -hold
+report clock_skew -setup
+``
+![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/a5481a54-ad53-4be8-b0ae-ea32345487e7)
+
 </details>
 
 ## Final steps for RTL2GDS using tritonRoute and openSTA
@@ -473,19 +581,33 @@ This generates the sky130_in.spice file as shown above. This SPICE deck is edite
 
 ### Power Distribution Network and routing
 
-+ Lab steps to build power distribution network
-+ Lab steps from power straps to std cell power
-+ Basics of global and detail routing and configure TritonRoute
-</details>
+`gen_pdn`
 
-<details>
-<summary>TritonRoute Features</summary>
 
-### TritonRoute Features
+We can confirm the success of PDN by checking the current def environment variable: `echo $::env(CURRENT_DEF)`
 
-+ TritonRoute feature 1 - Honors pre-processed route guides
-+ TritonRoute Feature2 & 3 - Inter-guide connectivity and intra- & inter-layer routing
-+ TritonRoute method to handle connectivity
-+ Routing topology algorithm and final files list post-route
+***Routing***
+OpenLANE uses the TritonRoute tool for routing. There are 2 stages of routing:
+
+Global routing: Routing region is divided into rectangle grids which are represented as course 3D routes (Fastroute tool)
+Detailed routing: Finer grids and routing guides used to implement physical wiring (TritonRoute tool)
+Features of TritonRoute:
+
+Honouring pre-processed route guides
+Assumes that each net satisfies inter guide connectivity
+Uses MILP based panel routing scheme
+Intra-layer parallel and inter-layer sequential routing framework
+Running routing step in TritonRoute as part of openLANE flow:
+
+`run_routing`
+SPEF Extraction
+
+To use this engine we need to go to
+`cd Desktop/work/tools/SPEF_Extractor`
+`python3 /home/vsduser/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/16-09_19-58/tmp/merged.lef` `/home/vsduser/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/16-09_19-58/results/routing/picorv32a.def`
+SPEF file is created in 
+`/home/vsduser/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/16-09_19-58/results/routing/`
+
+
 </details>
 
