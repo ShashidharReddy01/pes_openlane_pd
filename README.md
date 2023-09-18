@@ -266,6 +266,7 @@ ll Rows:**
   - On Fall: Calculate as time(slew_high_fall_thr) minus time(slew_low_fall_thr).
 
 These timing characteristics are vital for understanding and characterizing the inverter's performance and behavior within a digital circuit.
+</details>
 
 ## Design library cell using Magic Layout and ngspice characterization
 
@@ -274,15 +275,45 @@ These timing characteristics are vital for understanding and characterizing the 
 
 ### Labs for CMOS inverter ngspice simulations
 
+**OpenLANE** allows users to make changes to environment variables on the fly. For instance, if we wish to change the pin placement from equidistant to some other style of placement we may do the following in the openLANE flow:
 
-+ IO placer revision
-+ SPICE deck creation for CMOS inverter
-+ SPICE simulation lab for CMOS inverter
-+ Switching Threshold Vm
-+ Static and dynamic simulation of CMOS inverter
-+ Lab steps to git clone vsdstdcelldesign
+`set ::env(FP_IO_MODE) 2`
+SPICE Deck creation & Simulation
+A SPICE deck includes information about the following:
 
++ Model description
++ Netlist description
++ Component connectivity
++ Component values
++ Capacitance load
++ Nodes
++ Simulation type and parameters
++ Libraries included
 
+***CMOS inverter Switching Threshold Vm***
+Thw sitching threshold of a CMOS inverter is the point on the transfer characteristic where Vin equals Vout (=Vm). At this point both PMOS and NOMOS are in ON state which gives rise to a leakage current
+
+**16 Mask CMOS Fabrication**
+
+The 16-mask CMOS process consists of the following steps:
+
++ Selection of subtrate: Secting the body/substrate material
++ Creating active region for transistors: Isolation between active region pockets by SiO2 and Si3N4 deposition followed by photolithography and etching
++ N-well and P-well formation: Ion implanation by Boron for P-well and by Phosphorous for N-well formation
++ Formation of gate terminal: NMOS and PMOS gates formed by photolithography techniques
++ LDD (lightly doped drain) formation: LDD formed to prevent hot electron effect
++ Source & drain formation: Screen oxide added to avoid channelling during implants followed by Aresenic implantation and annealing
++ Local interconnect formation: Removal of screen oxide by HF etching. Deposition of Ti for low resistant contacts
++ Higher level metal formation: CMP for planarization followed by TiN and Tungsten deposition. Top SiN layer for chip protection
+
+**Inverter Standard cell Layout & SPICE extraction**
+The Magic layout of a CMOS inverter will be used so as to intergate the inverter with the picorv32a design. To do this, inverter magic file is sourced from vsdstdcelldesign by cloning it within the openlane_working_dir/openlane directory as follows:
+
+`git clone https://github.com/nickson-jose/vsdstdcelldesign`
+
+`cp sky130A.tech /home/vsduser/Desktop/work/tools/openlane_working_dir/openlane/vsdstdcelldesign`
+
+` magic -T sky130A.tech sky130_inv.mag &`
 </details>
 
 <details>
