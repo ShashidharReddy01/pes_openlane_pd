@@ -400,16 +400,25 @@ This generates the sky130_in.spice file as shown above. This SPICE deck is edite
 + To add contact cuts to metal3, first select an area using left and right click. Then hovering over the m3contact we click middle mouse button.
   ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/2502ea93-3ef7-480c-bf4e-d4fe897fc343)
 
++ ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/be7be7b6-c455-467b-a902-dfc4b245f4d0)
+  ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/ed4c7380-be18-4929-b1db-b511be2de499)
+
 + ```
   load tech sky130A.tech
   drc check
   ```
   ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/3a112cd0-7320-4313-a1f5-78e477ca4d5a)
+
+
+
   ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/bb6d58be-54fe-497c-bb8a-2d8266e7c459)
 
 + ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/e2e2ee4f-1261-42a0-b12e-8941a9f5fa8f)
 + ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/66ce6665-0be5-4ee7-8533-7edfa4c68466)
 + ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/e38dcfa3-59de-472b-91d5-8ccb37f7bfa5)
+ + Following changes to be done
+  ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/72e955cc-fb40-4e97-8ac7-485b428b3e2d)
+  ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/45168170-d35c-4427-80c9-44b54191d3e4)
 + ```
   tech load sky130A.tech
   drc check
@@ -418,9 +427,11 @@ This generates the sky130_in.spice file as shown above. This SPICE deck is edite
   ```
   ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/038b521d-9af9-403b-88e0-98ee3f225af0)
   ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/f2e69530-6bc2-478a-8e02-df25c8c6b919)
-  - Select the existing nwell.4 and make a copy of it by selecting it and clicking 'c'.
+  - Select the existing nwell.4 and make a copy of it 
   - Now select a small area on the nwell.4 and add an 'nsubstratecontact' by hovering over it and clicking middle mouse button.
-  
+
+
+
 </details>
 
 
@@ -478,13 +489,19 @@ We copy the .mag file that we created to the 'src' folder of picorv32a folder.
   add_lefs -src $lefs
   run_synthesis
   ```
+  ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/5de8b539-77ae-4578-9ced-7f5802b8b59a)
+
   ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/5f581300-7a00-45f6-8977-1182557373c1)
   ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/7523edbd-56be-41b4-82d5-c34dcb13a13c)
+  ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/f662f80c-b141-425d-9393-0a69a9bc59dd)
+
 
 + `init_floorplan
    run_placement`
+  ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/2a252ae0-3596-40a0-acca-36f5ec0b763d)
+
 + `magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.placement.def &`
-+ ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/f103f653-d5a6-4f75-814a-030835c02cde)
+
 
 </details>
 
@@ -501,7 +518,7 @@ We copy the .mag file that we created to the 'src' folder of picorv32a folder.
 
    - ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/7f90314f-c86b-47c6-9877-dab5ee613e11)
 + `sta pre_sta.conf`
-+ ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/58a913bd-2767-4b88-ae19-cc4ee899caa1)
+
   
 </details>
 
@@ -518,8 +535,6 @@ We copy the .mag file that we created to the 'src' folder of picorv32a folder.
 
 ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/e80a6b15-faee-4bab-94ef-05b7a75f6979)
 
-+ `run_cts`
- ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/3527d6bc-7941-4421-9dcb-e2a9f957910f)
 
 </details>
 
@@ -549,17 +564,13 @@ read_sdc /openLANE_flow/designs/picorv32a/src/my_base.sdc
 set_propagated_clock (all_clocks)
 report_checks -path_delay min_max -format full_clock_expanded -digits 4
 ```
-![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/c56ce5a3-4eec-4e35-a964-f7644ce0a82e)
 
-![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/6289ae65-36e9-41f5-87f3-6d8c970884b2)
-
-![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/daca31c1-7909-4c73-8df9-689b76136750)
 
 ``
 report_clock_skew -hold
 report clock_skew -setup
 ``
-![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/a5481a54-ad53-4be8-b0ae-ea32345487e7)
+
 
 </details>
 
