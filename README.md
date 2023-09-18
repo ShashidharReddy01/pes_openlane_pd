@@ -571,7 +571,7 @@ report clock_skew -setup
 ### Routing and design rule check(DRC)
 
 + Introduction to Maze Routing Â LeeÂs algorithm
-+ LeeÂs Algorithm conclusion
++ Lees Algorithm conclusion
 + Design Rule Check
 
 </details>
