@@ -501,6 +501,8 @@ We copy the .mag file that we created to the 'src' folder of picorv32a folder.
   ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/2a252ae0-3596-40a0-acca-36f5ec0b763d)
 
 + `magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.placement.def &`
+  ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/fb2bb0f9-030f-4472-9fa8-2384281dc3b2)
+  ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/447ce574-1b28-4d96-94a2-c40b1f49f025)
 
 
 </details>
