@@ -543,6 +543,7 @@ We copy the .mag file that we created to the 'src' folder of picorv32a folder.
 ![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/e80a6b15-faee-4bab-94ef-05b7a75f6979)
 
 + `run_cts`
+![image](https://github.com/ShashidharReddy01/pes_openlane_pd/assets/142148810/8d706302-8326-4bbb-aea8-b418220004c0)
 
 
 </details>
